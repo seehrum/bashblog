@@ -2,8 +2,8 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 16488 bytes
-# Date: 2021-06-15
+# Size: 17147 bytes
+# Date: 2021-07-25
 
 # STATUS: Stable
 
@@ -25,6 +25,8 @@
 # Global Variables - set the names inside the double quotes, CONFIGURE!
 WEBSITE_NAME="Name Website"
 WEBSITE_LINK="https://www.Website.com"
+TWITTER="@twitter"
+LINK_IMG_BLOG="blog image path"
 FAVICON="favicon.ico"
 MENU_NAME_1="Home"
 CSS_1="normalize.css"
@@ -36,6 +38,7 @@ TITLE_LINK_BACKARROW="back"
 TITLE_TAG="TAGS"
 DIR_CSS="css"
 DIR_TAGS="tags"
+DIR_IMG="img"
 DIR_BACKUP="backup"
 SOCIAL_NAME_1="Facebook"
 SOCIAL_NAME_2="Instagram"
@@ -53,7 +56,7 @@ INDEXHTML="index.html"
 
 # checks if files exist
 CHECK_FILES(){
-for i in ${INDEXHTML} ${DIR_TAGS} ${DIR_CSS} ;do
+for i in ${INDEXHTML} ${DIR_TAGS} ${DIR_CSS} ${DIR_IMG} ;do
 [[ ! -e "${i}" ]] && { echo "$i Does not exist." ; exit 1 ; }
 done
 }
@@ -67,6 +70,7 @@ else
 echo "Creating the necessary files and folders"
 mkdir -v "${DIR_CSS}"       ; \
 mkdir -v "${DIR_TAGS}"      ; \
+mkdir -v "${DIR_IMG}"       ; \
 BASE_HTML			        ; \
 exit 0
 fi
@@ -88,6 +92,7 @@ cat <<EOF > "${INDEXHTML}"
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+		<meta property="og:image" content="${LINK_IMG_BLOG}" />
 		<meta name="description" content="${DESCRIPTION}">
 		<meta name="application-name" content="${WEBSITE_NAME}">
 		<meta property="og:description" content="${DESCRIPTION}">
@@ -97,6 +102,10 @@ cat <<EOF > "${INDEXHTML}"
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
+		<meta name="twitter:title" content="${WEBSITE_NAME}"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" value="${TWITTER}"/>
+		<meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
@@ -262,6 +271,10 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${keywords_tag}, ${WEBSITE_NAME}"/>
+		<meta name="twitter:title" content="${TITLE_TAG}"/>
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" value="${TWITTER}"/>
+		<meta name="twitter:description" content="${description_tag}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../${DIR_CSS}/${CSS_1}">
@@ -501,6 +514,7 @@ mkdir -v ${DIR_BACKUP}
 cp -v ${INDEXHTML} ${DIR_BACKUP}
 cp -r -v ${DIR_TAGS} ${DIR_BACKUP}
 cp -r -v ${DIR_CSS} ${DIR_BACKUP}
+cp -r -v ${DIR_IMG} ${DIR_BACKUP}
 
 # compress css
 sed -i -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' ${DIR_CSS}/${CSS_1}
@@ -578,4 +592,3 @@ case $1 in
              "-info" | "-f")	CHECK_FILES ; INFO						;				;;
                 *)   HELP												;  exit 1	;   ;;
 esac
-
