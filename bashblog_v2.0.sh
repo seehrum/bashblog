@@ -2,8 +2,8 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 24728 bytes
-# Date: 2021-06-16
+# Size: 25789 bytes
+# Date: 2021-07-25
 
 # STATUS: Stable
 
@@ -25,6 +25,8 @@
 # Global Variables - set the names inside the double quotes, CONFIGURE!
 WEBSITE_NAME="Name Website"
 WEBSITE_LINK="https://www.Website.com"
+TWITTER="@twitter"
+LINK_IMG_BLOG="blog image path"
 FAVICON="favicon.ico"
 MENU_NAME_1="Home"
 CSS_1="normalize.css"
@@ -38,6 +40,7 @@ TITLE_TAG="TAGS"
 DIR_POSTS="post"
 DIR_CSS="css"
 DIR_TAGS="tags"
+DIR_IMG="img"
 DIR_BACKUP="backup"
 SOCIAL_NAME_1="Facebook"
 SOCIAL_NAME_2="Instagram"
@@ -55,7 +58,7 @@ INDEXHTML="index.html"
 
 # checks if files exist
 CHECK_FILES(){
-for i in ${INDEXHTML} ${DIR_POSTS} ${DIR_TAGS} ${DIR_CSS} ;do
+for i in ${INDEXHTML} ${DIR_POSTS} ${DIR_TAGS} ${DIR_CSS} ${DIR_IMG} ;do
 [[ ! -e "${i}" ]] && { echo "$i Does not exist." ; exit 1 ; }
 done
 }
@@ -70,6 +73,7 @@ echo "Creating the necessary files and folders"
 mkdir -v "${DIR_POSTS}"     ; \
 mkdir -v "${DIR_CSS}"       ; \
 mkdir -v "${DIR_TAGS}"      ; \
+mkdir -v "${DIR_IMG}"       ; \
 BASE_HTML			        ; \
 exit 0
 fi
@@ -134,6 +138,7 @@ cat <<EOF > "${INDEXHTML}"
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="description" content="${DESCRIPTION}">
 		<meta name="application-name" content="${WEBSITE_NAME}">
+		<meta property="og:image" content="${LINK_IMG_BLOG}" />
 		<meta property="og:description" content="${DESCRIPTION}">
 		<meta property="og:locale" content="${LANGUAGE}">
 		<meta property="og:url" content="${WEBSITE_LINK}/${MENU_LINK_1}">
@@ -141,6 +146,10 @@ cat <<EOF > "${INDEXHTML}"
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
+		<meta name="twitter:title" content="${WEBSITE_NAME}"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" value="${TWITTER}"/>
+        <meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
@@ -241,6 +250,9 @@ fi
 local post_title_upper="${post_title^^}"
 local post_title_lower="${post_title,,}"
 
+#image link og:image
+read -ep "link og:image: " link_img_post
+
 # Creates HTML posting file 
 cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html"
 <!DOCTYPE html>
@@ -255,6 +267,7 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="description" content="${DESCRIPTION}">
 		<meta name="application-name" content="${WEBSITE_NAME}">
+		<meta property="og:image" content="${link_img_post}" />
 		<meta property="og:description" content="${DESCRIPTION}">
 		<meta property="og:locale" content="${LANGUAGE}">
 		<meta property="og:url" content="${WEBSITE_LINK}/${MENU_LINK_1}">
@@ -262,6 +275,10 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
+		<meta name="twitter:title" content="${post_title}"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" value="${TWITTER}"/>
+        <meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
@@ -389,6 +406,10 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${keywords_tag}, ${WEBSITE_NAME}"/>
+		<meta name="twitter:title" content="${TITLE_TAG}"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" value="${TWITTER}"/>
+        <meta name="twitter:description" content="${description_tag}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../${DIR_CSS}/${CSS_1}">
@@ -754,6 +775,7 @@ cp -v ${INDEXHTML} ${DIR_BACKUP}
 cp -r -v ${DIR_POSTS} ${DIR_BACKUP}
 cp -r -v ${DIR_TAGS} ${DIR_BACKUP}
 cp -r -v ${DIR_CSS} ${DIR_BACKUP}
+cp -r -v ${DIR_IMG} ${DIR_BACKUP}
 
 # compress css 1 normalize.css
 if [ -e ${DIR_CSS}/${CSS_1} ] ; then
