@@ -281,8 +281,8 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
         <meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
-		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_2}">
+		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_1}">
+		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_2}">
 	</head>
 	<body>
 		<main>
