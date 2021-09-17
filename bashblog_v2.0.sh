@@ -75,7 +75,7 @@ fi
 # check if there is any category registered (check if the post directory is empty)
 CHECK_CATEGORY(){
 if [ -z "$(ls -A "${DIR_POSTS}")" ]; then
-echo "ERROR: no categories registered"
+echo "ERROR: No categories registered"
 exit 1
 else
 sleep 0
