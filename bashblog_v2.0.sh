@@ -2,7 +2,7 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 26291 bytes
+# Size: 26633 bytes
 # Date: 2021-09-17
 
 # STATUS: Stable
@@ -56,19 +56,30 @@ BROWSER="firefox"
 EDITOR="vim"
 INDEXHTML="index.html"
 
-# checks if files exist or if index.html is compressed 
+# checks if files exist
 CHECK_FILES(){
 for i in ${INDEXHTML} ${DIR_POSTS} ${DIR_TAGS} ${DIR_CSS} ${DIR_IMG} ;do
 [[ ! -e "${i}" ]] && { echo "$i Does not exist." ; exit 1 ; }
 done
+}
 
 # check if index.html file is compressed 
+CHECK_COMPRESS(){
 if [ $(wc -l <${INDEXHTML}) -eq 1  ];
 then
 echo "ERROR: index.html file is compressed"
 exit 1
 fi
+}
 
+# check if there is any category registered (check if the post directory is empty)
+CHECK_CATEGORY(){
+if [ -z "$(ls -A "${DIR_POSTS}")" ]; then
+echo "ERROR: no categories registered"
+exit 1
+else
+sleep 0
+fi
 }
 
 # Create files and execute fuction BASE_HTML
@@ -838,7 +849,6 @@ HELP()
 cat <<EOF
 bashblog v2.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -875,15 +885,15 @@ EOF
 }
 
 case $1 in
-             "-new" | "-n")	 NEW										;				;;
-             "-add-category" | "-ac") CHECK_FILES  ; ADD_CATEGORY		;				;;
-             "-del-category" | "-dc") CHECK_FILES  ; DEL_CATEGORY		;				;;
-             "-add-post-blog" | "-apb") CHECK_FILES  ; BASE_HTML		;				;;
-             "-del-post-blog" | "-dpb") CHECK_FILES ; DEL_POST_BLOG		;				;;
-			 "-add-link" | "-al")	CHECK_FILES ; ADD_LINK				;				;;
-             "-del-link" | "-dl")	CHECK_FILES ; DEL_LINK				;				;;
-             "-compress" | "-c")	CHECK_FILES ; COMPRESS				;				;;
-             "-browser" | "-b")	CHECK_FILES ; BROWSER					;				;;
-             "-info" | "-f")	CHECK_FILES ; INFO						;				;;
-                *)   HELP												;  exit 1	;   ;;
+             "-new" | "-n")	 NEW										;	;;
+             "-add-category" | "-ac") CHECK_COMPRESS ; CHECK_FILES  ; ADD_CATEGORY				;	;;
+             "-del-category" | "-dc") CHECK_COMPRESS ; CHECK_FILES  ; CHECK_CATEGORY ; DEL_CATEGORY		;	;;
+             "-add-post-blog" | "-apb") CHECK_COMPRESS ; CHECK_FILES  ; CHECK_CATEGORY ; BASE_HTML		;	;;
+             "-del-post-blog" | "-dpb") CHECK_COMPRESS ; CHECK_FILES ; CHECK_CATEGORY ; DEL_POST_BLOG		;	;;
+			 "-add-link" | "-al")	CHECK_COMPRESS ; CHECK_FILES ; ADD_LINK				;	;;
+             "-del-link" | "-dl") CHECK_COMPRESS ; CHECK_FILES ; DEL_LINK					;	;;
+             "-compress" | "-c") CHECK_COMPRESS ; CHECK_FILES ; COMPRESS					;	;;
+             "-browser" | "-b")	CHECK_FILES ; BROWSER								;	;;
+             "-info" | "-f")	CHECK_FILES ; INFO								;	;;
+                *)   HELP											;  exit 1	;   ;;
 esac
