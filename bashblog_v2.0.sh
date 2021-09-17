@@ -2,8 +2,8 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 25789 bytes
-# Date: 2021-07-25
+# Size: 25906 bytes
+# Date: 2021-09-17
 
 # STATUS: Stable
 
@@ -659,7 +659,7 @@ exit 1
 fi
 
 # checks if post exists in index.html file 
-if grep -qow '<li><article><h4><a href="'"${DIR_POSTS}"'/'"${category_name_upper// /-}"'/'"${html_name_lower// /-}"'.html" title="'"${post_title_lower}"'">'"${post_title_lower}"'</a></h4><time datetime="'"${year_post}"'-'"${month_post}"'-'"${day_post}"'' ${INDEXHTML} ; then
+if grep -qow '<li><article><h4><a href="'"${DIR_POSTS}"'/'"${category_name_upper// /-}"'/'"${html_name_lower// /-}"'.html" title="'"${post_title_lower}"'">'"${post_title}"'</a></h4><time datetime="'"${year_post}"'-'"${month_post}"'-'"${day_post}"'' ${INDEXHTML} ; then
 sleep 0
 else
 echo "ERROR: Post does not exist!."
@@ -667,7 +667,7 @@ exit 1
 fi
 
 # delete post in index.html
-sed -i '/<li><article><h4><a href="'"${DIR_POSTS}"'\/'"${category_name_upper// /-}"'\/'"${html_name_lower// /-}"'\.html" title="'"${post_title_lower}"'">'"${post_title_lower}"'<\/a><\/h4><time datetime="'"${year_post}"'-'"${month_post}"'-'"${day_post}"'/d' ${INDEXHTML}
+sed -i '/<li><article><h4><a href="'"${DIR_POSTS}"'\/'"${category_name_upper// /-}"'\/'"${html_name_lower// /-}"'\.html" title="'"${post_title_lower}"'">'"${post_title}"'<\/a><\/h4><time datetime="'"${year_post}"'-'"${month_post}"'-'"${day_post}"'/d' ${INDEXHTML}
 
 # delete post from tag files 
 sed -i '/<!-- CATEGORY:'"${category_name_upper// /-}"' - POST:'"${post_title_upper// /-}"' -->/,/<!-- CATEGORY:'"${category_name_upper// /-}"' - POST:'"${post_title_upper// /-}"' END -->/d' ${DIR_TAGS}/*.html 2>/dev/null
