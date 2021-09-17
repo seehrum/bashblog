@@ -2,7 +2,7 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 17730 bytes
+# Size: 17953 bytes
 # Date: 2021-09-17
 
 # STATUS: Stable
@@ -563,9 +563,12 @@ echo "BashBlog v1.0 - 2021"
 echo "--------------------"
 echo -ne "BLOG POSTS: " ; grep -wc "\<article class=\"article-post\"" ${INDEXHTML}
 echo -ne "TAGS: " ; ls -la ${DIR_TAGS} |grep -e "^-"|wc -l
+echo -ne "CSS: " ; ls -la ${DIR_CSS} |grep -e "^-"|wc -l
+echo -ne "IMG: " ; ls -la ${DIR_IMG} |grep -e "^-"|wc -l
 echo -ne "${INDEXHTML}: " ; du -hs ${INDEXHTML} | cut -f1
 echo -ne "${DIR_TAGS}/: " ; du -hs ${DIR_TAGS} | cut -f1
-
+echo -ne "${DIR_CSS}/: " ; du -hs ${DIR_CSS} | cut -f1
+echo -ne "${DIR_IMG}/: " ; du -hs ${DIR_IMG} | cut -f1
 }
 
 HELP()
