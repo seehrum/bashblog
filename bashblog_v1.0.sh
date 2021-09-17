@@ -576,7 +576,6 @@ HELP()
 cat <<EOF
 bashblog v1.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -608,11 +607,11 @@ EOF
 
 case $1 in
              "-new" | "-n")	 NEW						;				;;
-             "-add-post-blog" | "-apb") CHECK_COMPRESS ; CHECK_FILES  ; BASE_HTML		;		;;
-             "-del-post-blog" | "-dpb") CHECK_COMPRESS ; CHECK_FILES ; DEL_POST_BLOG		;		;;
-			 "-add-link" | "-al")	CHECK_COMPRESS ; CHECK_FILES ; ADD_LINK		;		;;
-             "-del-link" | "-dl")	CHECK_COMPRESS ; CHECK_FILES ; DEL_LINK			;		;;
-             "-compress" | "-c")	CHECK_COMPRESS ; CHECK_FILES ; COMPRESS			;		;;
+             "-add-post-blog" | "-apb") CHECK_FILES ; CHECK_COMPRESS  ; BASE_HTML		;		;;
+             "-del-post-blog" | "-dpb") CHECK_FILES ; CHECK_COMPRESS ; DEL_POST_BLOG		;		;;
+			 "-add-link" | "-al")	CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK		;		;;
+             "-del-link" | "-dl")	CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK			;		;;
+             "-compress" | "-c")	CHECK_FILES ; CHECK_COMPRESS ; COMPRESS			;		;;
              "-browser" | "-b")	CHECK_FILES ; BROWSER				;				;;
              "-info" | "-f")	CHECK_FILES ; INFO				;				;;
                 *)   HELP							;  exit 1		;	;;
