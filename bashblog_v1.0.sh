@@ -2,8 +2,8 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 17147 bytes
-# Date: 2021-07-25
+# Size: 17730 bytes
+# Date: 2021-09-17
 
 # STATUS: Stable
 
@@ -59,6 +59,15 @@ CHECK_FILES(){
 for i in ${INDEXHTML} ${DIR_TAGS} ${DIR_CSS} ${DIR_IMG} ;do
 [[ ! -e "${i}" ]] && { echo "$i Does not exist." ; exit 1 ; }
 done
+}
+
+# check if index.html file is compressed 
+CHECK_COMPRESS(){
+if [ $(wc -l <${INDEXHTML}) -eq 1  ];
+then
+echo "ERROR: index.html file is compressed"
+exit 1
+fi
 }
 
 # Create files and execute fuction BASE_HTML
@@ -134,7 +143,6 @@ cat <<EOF > "${INDEXHTML}"
 		</footer>
 	</body>
 </html>
-
 EOF
 echo "index file successfully created!"
 else
@@ -307,7 +315,6 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		</footer>
 	</body>
 </html>
-
 EOF
 
 else
@@ -502,6 +509,14 @@ else
 sleep 0
 fi
 
+# checks if link exists in index.html file 
+if grep -qow '<li><a href="'"${del_link_html_lower// /-}.html"'">'"${del_link_name}"'' ${INDEXHTML} ; then
+sleep 0
+else
+echo "ERROR: Link does not exist!."
+exit 1
+fi
+
 # delete link in index
 sed -i '/<li><a class="active" href="'"${del_link_html_lower// /-}.html"'">'"${del_link_name}"'.*/d' ${INDEXHTML}
 
@@ -516,11 +531,21 @@ cp -r -v ${DIR_TAGS} ${DIR_BACKUP}
 cp -r -v ${DIR_CSS} ${DIR_BACKUP}
 cp -r -v ${DIR_IMG} ${DIR_BACKUP}
 
-# compress css
+# compress css 1 normalize.css
+if [ -e ${DIR_CSS}/${CSS_1} ] ; then
 sed -i -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' ${DIR_CSS}/${CSS_1}
 sed -i -e :a -e '$!N; s/\n\(.\)/\1/; ta' ${DIR_CSS}/${CSS_1}
+else
+sleep 0
+fi
+
+# compress css 2 style.css 
+if [ -e ${DIR_CSS}/${CSS_2} ] ; then
 sed -i -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' ${DIR_CSS}/${CSS_2}
 sed -i -e :a -e '$!N; s/\n\(.\)/\1/; ta' ${DIR_CSS}/${CSS_2}
+else
+sleep 0
+fi
 
 # compress html files loop
 for f in ${INDEXHTML} ${DIR_TAGS}/*.html
@@ -547,19 +572,17 @@ HELP()
 {
 cat <<EOF
 bashblog v1.0
-
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
 
 USAGE:
 ./bashblog [OPTIONS]
-
 Arguments:
    -new | -n
      Create necessary files and folders
    
    -add-post-blog | -apb
      Adds new post to blog
-
+   
    -del-post-blog | -dpb
      Delete post blog
     
@@ -571,24 +594,23 @@ Arguments:
    
    -compress | -c
      compress all html files 
-
+   
    -browser | -b
      Opens website in browser
-
+   
    -info | -f
      shows number of posts and number of html tags files 
-
 EOF
 }
 
 case $1 in
-             "-new" | "-n")	 NEW										;				;;
-             "-add-post-blog" | "-apb") CHECK_FILES  ; BASE_HTML		;				;;
-             "-del-post-blog" | "-dpb") CHECK_FILES ; DEL_POST_BLOG		;				;;
-			 "-add-link" | "-al")	CHECK_FILES ; ADD_LINK				;				;;
-             "-del-link" | "-dl")	CHECK_FILES ; DEL_LINK				;				;;
-             "-compress" | "-c")	CHECK_FILES ; COMPRESS				;				;;
-             "-browser" | "-b")	CHECK_FILES ; BROWSER					;				;;
-             "-info" | "-f")	CHECK_FILES ; INFO						;				;;
-                *)   HELP												;  exit 1	;   ;;
+             "-new" | "-n")	 NEW						;				;;
+             "-add-post-blog" | "-apb") CHECK_COMPRESS ; CHECK_FILES  ; BASE_HTML		;		;;
+             "-del-post-blog" | "-dpb") CHECK_COMPRESS ; CHECK_FILES ; DEL_POST_BLOG		;		;;
+			 "-add-link" | "-al")	CHECK_COMPRESS ; CHECK_FILES ; ADD_LINK		;		;;
+             "-del-link" | "-dl")	CHECK_COMPRESS ; CHECK_FILES ; DEL_LINK			;		;;
+             "-compress" | "-c")	CHECK_COMPRESS ; CHECK_FILES ; COMPRESS			;		;;
+             "-browser" | "-b")	CHECK_FILES ; BROWSER				;				;;
+             "-info" | "-f")	CHECK_FILES ; INFO				;				;;
+                *)   HELP							;  exit 1		;	;;
 esac
