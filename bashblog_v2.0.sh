@@ -2,7 +2,7 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 25906 bytes
+# Size: 26291 bytes
 # Date: 2021-09-17
 
 # STATUS: Stable
@@ -56,11 +56,19 @@ BROWSER="firefox"
 EDITOR="vim"
 INDEXHTML="index.html"
 
-# checks if files exist
+# checks if files exist or if index.html is compressed 
 CHECK_FILES(){
 for i in ${INDEXHTML} ${DIR_POSTS} ${DIR_TAGS} ${DIR_CSS} ${DIR_IMG} ;do
 [[ ! -e "${i}" ]] && { echo "$i Does not exist." ; exit 1 ; }
 done
+
+# check if index.html file is compressed 
+if [ $(wc -l <${INDEXHTML}) -eq 1  ];
+then
+echo "ERROR: index.html file is compressed"
+exit 1
+fi
+
 }
 
 # Create files and execute fuction BASE_HTML
@@ -760,6 +768,14 @@ else
 sleep 0
 fi
 
+# checks if link exists in index.html file 
+if grep -qow '<li><a href="'"${del_link_html_lower// /-}.html"'">'"${del_link_name}"'' ${INDEXHTML} ; then
+sleep 0
+else
+echo "ERROR: Post does not exist!."
+exit 1
+fi
+
 # delete link in index
 sed -i '/<li><a class="active" href="'"${del_link_html_lower// /-}.html"'">'"${del_link_name}"'.*/d' ${INDEXHTML}
 
@@ -822,6 +838,7 @@ HELP()
 cat <<EOF
 bashblog v2.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
+
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
