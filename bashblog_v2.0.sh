@@ -886,13 +886,13 @@ EOF
 
 case $1 in
              "-new" | "-n")	 NEW										;	;;
-             "-add-category" | "-ac") CHECK_COMPRESS ; CHECK_FILES  ; ADD_CATEGORY				;	;;
-             "-del-category" | "-dc") CHECK_COMPRESS ; CHECK_FILES  ; CHECK_CATEGORY ; DEL_CATEGORY		;	;;
-             "-add-post-blog" | "-apb") CHECK_COMPRESS ; CHECK_FILES  ; CHECK_CATEGORY ; BASE_HTML		;	;;
-             "-del-post-blog" | "-dpb") CHECK_COMPRESS ; CHECK_FILES ; CHECK_CATEGORY ; DEL_POST_BLOG		;	;;
-			 "-add-link" | "-al")	CHECK_COMPRESS ; CHECK_FILES ; ADD_LINK				;	;;
-             "-del-link" | "-dl") CHECK_COMPRESS ; CHECK_FILES ; DEL_LINK					;	;;
-             "-compress" | "-c") CHECK_COMPRESS ; CHECK_FILES ; COMPRESS					;	;;
+             "-add-category" | "-ac") CHECK_FILES ; CHECK_COMPRESS ; ADD_CATEGORY				;	;;
+             "-del-category" | "-dc")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_CATEGORY		;	;;
+             "-add-post-blog" | "-apb")  CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML		;	;;
+             "-del-post-blog" | "-dpb")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_POST_BLOG		;	;;
+			 "-add-link" | "-al")	CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK				;	;;
+             "-del-link" | "-dl")  CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK					;	;;
+             "-compress" | "-c") CHECK_FILES ; CHECK_COMPRESS ; COMPRESS					;	;;
              "-browser" | "-b")	CHECK_FILES ; BROWSER								;	;;
              "-info" | "-f")	CHECK_FILES ; INFO								;	;;
                 *)   HELP											;  exit 1	;   ;;
