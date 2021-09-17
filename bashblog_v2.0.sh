@@ -783,7 +783,7 @@ fi
 if grep -qow '<li><a href="'"${del_link_html_lower// /-}.html"'">'"${del_link_name}"'' ${INDEXHTML} ; then
 sleep 0
 else
-echo "ERROR: Post does not exist!."
+echo "ERROR: Link does not exist!."
 exit 1
 fi
 
