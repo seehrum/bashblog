@@ -181,7 +181,6 @@ cat <<EOF > "${INDEXHTML}"
 		</footer>
 	</body>
 </html>
-
 EOF
 echo "index file successfully created!"
 else
@@ -442,7 +441,6 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		</footer>
 	</body>
 </html>
-
 EOF
 
 else
@@ -810,10 +808,12 @@ echo "--------------------"
 echo -ne "BLOG POSTS: " ; grep -wc '<li><article><h4><a href="post' ${INDEXHTML}
 echo -ne "TAGS: " ; ls -la ${DIR_TAGS} |grep -e "^-"|wc -l
 echo -ne "CSS: " ; ls -la ${DIR_CSS} |grep -e "^-"|wc -l
+echo -ne "IMG: " ; ls -la ${DIR_IMG} |grep -e "^-"|wc -l
 echo -ne "${INDEXHTML}: " ; du -hs ${INDEXHTML} | cut -f1
 echo -ne "${DIR_POSTS}/: " ; du -hs ${DIR_POSTS} | cut -f1
 echo -ne "${DIR_TAGS}/: " ; du -hs ${DIR_TAGS} | cut -f1
 echo -ne "${DIR_CSS}/: " ; du -hs ${DIR_CSS} | cut -f1
+echo -ne "${DIR_IMG}/: " ; du -hs ${DIR_IMG} | cut -f1
 
 }
 
@@ -821,12 +821,9 @@ HELP()
 {
 cat <<EOF
 bashblog v2.0
-
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
-
 Arguments:
    -new | -n
      Create necessary files and folders
@@ -836,10 +833,10 @@ Arguments:
    
    -del-category | -ad
      Delete category
-
+   
    -add-post-blog | -apb
      Adds new post to category blog
-
+   
    -del-post-blog | -dpb
      Delete post blog
     
@@ -851,13 +848,12 @@ Arguments:
    
    -compress | -c
      compress all html files 
-
+   
    -browser | -b
      Opens website in browser
-
+   
    -info | -f
      shows number of posts and number of html tags files 
-
 EOF
 }
 
@@ -874,4 +870,3 @@ case $1 in
              "-info" | "-f")	CHECK_FILES ; INFO						;				;;
                 *)   HELP												;  exit 1	;   ;;
 esac
-
