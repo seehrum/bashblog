@@ -2,7 +2,7 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 17953 bytes
+# Size: 17952 bytes
 # Date: 2021-09-17
 
 # STATUS: Stable
