@@ -831,7 +831,7 @@ Arguments:
    -add-category | -ac
      Adds new category
    
-   -del-category | -ad
+   -del-category | -dc
      Delete category
    
    -add-post-blog | -apb
