@@ -830,7 +830,7 @@ ${BROWSER} ${INDEXHTML}
 }
 
 INFO(){
-echo "BashBlog v1.0 - 2021"
+echo "BashBlog v2.0 - 2021"
 echo "--------------------"
 echo -ne "BLOG POSTS: " ; grep -wc '<li><article><h4><a href="post' ${INDEXHTML}
 echo -ne "TAGS: " ; ls -la ${DIR_TAGS} |grep -e "^-"|wc -l
