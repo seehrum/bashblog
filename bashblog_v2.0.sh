@@ -468,7 +468,7 @@ fi
 
 local date_hour3="$(date +"%Y-%m-%d" | xargs)"
 
-# add tags to index.html 
+# add tag link to html post file  
 sed -i 's/TAGS:/& <a href="..\/..\/'"${DIR_TAGS}"'\/tag_'"${tag_lower// /-}"'.html" rel="'"${tag_lower}"'">#'"${tag_lower}"'<\/a>/' ${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html
 
 # add comments to html tag file 
