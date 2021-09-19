@@ -146,6 +146,9 @@ cat <<EOF > "${INDEXHTML}"
 EOF
 echo "index file successfully created!"
 else
+
+# ADD_POST_BLOG
+
 # variables
 local date_hour="$(date +"%Y-%m-%d %R:%S" | xargs)"
 local date_hour2="$(date +"%Y-%m-%d - %R:%S" | xargs)"
