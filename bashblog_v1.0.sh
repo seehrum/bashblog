@@ -2,7 +2,7 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 19130 bytes
+# Size: 19088 bytes
 # Date: 2021-09-20
 
 # STATUS: Stable
@@ -627,10 +627,10 @@ Arguments:
      Opens website in browser
    
    -info | -f
-     shows number of posts and number of html tags files 
+     Shows number of posts and number of html tags files 
    
     -menu | -m
-     shows number of posts and number of html tags files 
+     Menu mode 
 
 EOF
 }
