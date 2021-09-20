@@ -2,8 +2,8 @@
 
 # bashblog v2.1 
 # Author: Raphael Ciribelly
-# Size: 29788 bytes
-# Date: 2021-09-19
+# Size: 31789 bytes
+# Date: 2021-09-20
 
 # DEPENDENCIES: ncftp
 
@@ -68,8 +68,8 @@ FTP_DIR_TAGS="/hostdirectory/$DIR_TAGS/"
 
 # FTP - asks if you want to send the changes to the server 
 FTP_QUESTION(){
-read -ep "Do you want to send the changes to the server? ?[Y/N]: " answer
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+read -ep "Do you want to send the changes to the server? ?[Y/N]: " ftp_answer
+if [ "$ftp_answer" != "${ftp_answer#[Yy]}" ] ;then
 PASSWORD
 else
 sleep 0
@@ -186,7 +186,7 @@ sed -i '/<ul class="posts">/a \
 ' ${INDEXHTML}
 
 # FTP - Send files to server 
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+if [ "$ftp_answer" != "${ftp_answer#[Yy]}" ] ;then
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR_POSTS}" "${DIR_POSTS}/${category_name_upper// /-}"
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR}" "${INDEXHTML}"
 else
@@ -400,7 +400,7 @@ sed -i '/<ul class="'"${category_name_lower// /-}"'">/a <li><article><h4><a href
 fi
 
 # FTP - Send files to server 
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+if [ "$ftp_answer" != "${ftp_answer#[Yy]}" ] ;then
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR_POSTS}/${category_name_upper// /-}" ${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR}" "${INDEXHTML}"
 else
@@ -410,8 +410,8 @@ fi
 
 # ADD TAG
 ADD_TAG_BLOG(){
-read -ep "ADD TAGS?[Y/N]: " answer
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+read -ep "ADD TAGS?[Y/N]: " tag_answer
+if [ "$tag_answer" != "${tag_answer#[Yy]}" ] ;then
 
 #add the word TAGS: to index.html
 sed -i '0,/<footer class="footer-post">/s//<footer class="footer-post">\n\t\t\t\t\t<p>TAGS:<\/p>/' ${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html
@@ -548,10 +548,10 @@ sed -i '/<!-- TAG -->/a <!-- CATEGORY:'"${category_name_upper// /-}"' - POST:'"$
 sed -i '/<\!-- CATEGORY:'"${category_name_upper// /-}"' - POST:'"${post_title_upper// /-}"' -->/a <li><article><h4><a href="..\/'"${DIR_POSTS}"'\/'"${category_name_upper// /-}\/"''"${html_name_lower// /-}.html"'" title="'"${post_title}"'">'"${post_title}"'<\/a><\/h4><time datetime=\"'"${date_hour}"'">'"${date_hour2}"'<\/time><\/article><\/li>' ${DIR_TAGS}/tag_${tag_lower// /-}.html
 
 # FTP - checks if tag file will be uploaded to server 
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+if [ "$ftp_answer" != "${ftp_answer#[Yy]}" ] ;then
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR_TAGS}" ${DIR_TAGS}/tag_${tag_lower// /-}.html
 else
-sleep
+sleep 0
 fi
 
 done
@@ -602,8 +602,8 @@ sed -i '/^<!-- CATEGORY:'"${category_name_upper// /-}"' .*/,/^<!-- CATEGORY:'"${
 grep -rIL "<\!-- CATEGORY:.*" ${DIR_TAGS}/*.html 2>/dev/null | xargs rm -rv 2>/dev/null
 
 # delete html file? 
-read -ep "Delete HTML files?[Y/N]: " answer
-if [ "$answer" != "${answer#[Yy]}" ] ; then
+read -ep "Delete HTML files?[Y/N]: " del_html_answer
+if [ "$del_html_answer" != "${del_html_answer#[Yy]}" ] ; then
 rm -vr ${DIR_POSTS}/${category_name_upper// /-}
 else
 sleep 0
@@ -770,8 +770,8 @@ sed -i '/<!-- CATEGORY:'"${category_name_upper// /-}"' - POST:'"${post_title_upp
 grep -rIL "<\!-- CATEGORY:.*" ${DIR_TAGS}/*.html 2>/dev/null | xargs rm -rv 2>/dev/null
 
 # delete html file? 
-read -ep "Delete HTML file?[Y/N]: " answer
-if [ "$answer" != "${answer#[Yy]}" ] ; then
+read -ep "Delete HTML file?[Y/N]: " del_html_answer
+if [ "$del_html_answer" != "${del_html_answer#[Yy]}" ] ; then
 rm -vr ${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html
 else
 sleep 0
@@ -821,7 +821,7 @@ fi
 sed -i -e 's/<li><a class=\"active\" href=\"'"${MENU_LINK_1}"'\">'"${MENU_NAME_1}"'<\/a><\/li>/<li><a class=\"active\" href=\"'"${MENU_LINK_1}"'\">'"${MENU_NAME_1}"'<\/a><\/li>\n\t\t\t\t\t\t<li><a href=\"'"${html_name_lower// /-}.html"'\">'"${new_link}"'<\/a><\/li>/' ${INDEXHTML}
 
 # FTP - Send index.html to server 
-if [ "$answer" != "${answer#[Yy]}" ] ;then
+if [ "$ftp_answer" != "${ftp_answer#[Yy]}" ] ;then
 ncftpput -R -v -u "${FTP_USER}" -p "${password}" "${FTP_HOST}" "${FTP_DIR}" "${INDEXHTML}"
 else
 sleep 0 
@@ -942,6 +942,7 @@ ${BROWSER} ${INDEXHTML}
 INFO(){
 echo "BashBlog v2.1 - 2021"
 echo "--------------------"
+echo -ne "CATEGORYS: " ; ls -l ${DIR_POSTS} | grep "^d" | wc -l
 echo -ne "BLOG POSTS: " ; grep -wc '<li><article><h4><a href="post' ${INDEXHTML}
 echo -ne "TAGS: " ; ls -la ${DIR_TAGS} |grep -e "^-"|wc -l
 echo -ne "CSS: " ; ls -la ${DIR_CSS} |grep -e "^-"|wc -l
@@ -954,11 +955,40 @@ echo -ne "${DIR_IMG}/: " ; du -hs ${DIR_IMG} | cut -f1
 
 }
 
+MENU(){
+clear
+echo "BashBlog v2.1"
+echo "============="
+PS3='Please enter your choice: '
+options=("New" "Add category" "Delete category" "Add post blog" "Delete post blog" "Add link" "Delete link" "Compress" "Ftp ncftp" "Ftp send all files" "Ftp send files" "Browser" "Information" "Quit")
+select opt in "${options[@]}"
+do
+    case "${opt}" in
+         "New") NEW                                                                            ;;
+         "Add category") CHECK_FILES ; CHECK_COMPRESS ; ADD_CATEGORY                           ;;
+	 "Delete category") CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_CATEGORY       ;;
+         "Add post blog") CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML           ;;
+         "Delete post blog") CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_POST_BLOG     ;;
+         "Add link") CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK	                               ;;
+    	 "Delete link") CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK                                ;;
+	 "Compress") CHECK_FILES ; CHECK_COMPRESS ; COMPRESS                                   ;;
+	 "Ftp ncftp") CHECK_FILES ; CHECK_NCFTP ; FTP_NCFTP                                    ;;
+	 "Ftp send all files") CHECK_FILES ; CHECK_NCFTP ; FTP_SEND_ALL_FILES	               ;;
+	 "Ftp send files") CHECK_FILES ; CHECK_NCFTP ; FTP_SEND_FILES                          ;;
+	 "Browser") CHECK_FILES ; BROWSER                                                      ;;
+	 "Information") CHECK_FILES ; INFO                                                     ;;
+         "Quit") break                                                                         ;;
+        *) echo "Invalid option: "${REPLY}""  ;;
+    esac
+done
+}
+
 HELP()
 {
 cat <<EOF
 bashblog v2.1
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
+
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -988,18 +1018,21 @@ Arguments:
     
    -ftp-ncftp | -fn
     Open ncftp
-
+   
    -ftp-send-all-files | -fsaf
      Upload all files to the hosting server
-
+   
    -ftp-send-file | -fsf
     Send specific files to the server
-
+   
    -browser | -b
      Opens website in browser
    
    -info | -f
-     shows number of posts and number of html tags files 
+     Shows number of posts and number of html tags files 
+
+   -menu | -m
+     Menu mode
 EOF
 }
 
@@ -1017,5 +1050,6 @@ case $1 in
              "-ftp-send-files" | "-fsf")	CHECK_FILES ; CHECK_NCFTP ; FTP_SEND_FILES			;	;;
              "-browser" | "-b")	CHECK_FILES ; BROWSER								;	;;
              "-info" | "-f")	CHECK_FILES ; INFO								;	;;
+             "-menu" | "-m")	MENU              								;	;;
                 *)   HELP											;  exit 1	;   ;;
 esac
