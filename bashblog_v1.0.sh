@@ -602,6 +602,7 @@ HELP()
 cat <<EOF
 bashblog v1.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
+
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
