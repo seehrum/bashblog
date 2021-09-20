@@ -2,8 +2,8 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 17952 bytes
-# Date: 2021-09-17
+# Size: 19130 bytes
+# Date: 2021-09-20
 
 # STATUS: Stable
 
@@ -574,6 +574,29 @@ echo -ne "${DIR_CSS}/: " ; du -hs ${DIR_CSS} | cut -f1
 echo -ne "${DIR_IMG}/: " ; du -hs ${DIR_IMG} | cut -f1
 }
 
+MENU(){
+clear
+echo "BashBlog v1.0"
+echo "============="
+PS3='Please enter your choice: '
+options=("New" "Add post blog" "Delete post blog" "Add link" "Delete link" "Compress" "Browser" "Information" "Quit")
+select opt in "${options[@]}"
+do
+    case "${opt}" in
+         "New") NEW                                                        ;;
+         "Add post blog") CHECK_FILES ; CHECK_COMPRESS  ; BASE_HTML        ;;
+	 "Delete post blog") CHECK_FILES ; CHECK_COMPRESS ; DEL_POST_BLOG  ;;
+         "Add link") CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK	           ;;
+         "Delete link") CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK	           ;;
+         "Compress") CHECK_FILES ; CHECK_COMPRESS ; COMPRESS	           ;;
+    	 "Browser") CHECK_FILES ; BROWSER                                  ;;
+	 "Information") CHECK_FILES ; INFO                                 ;;
+         "Quit") break                                                     ;;
+        *) echo "Invalid option: "${REPLY}""                               ;;
+    esac
+done
+}
+
 HELP()
 {
 cat <<EOF
@@ -605,6 +628,10 @@ Arguments:
    
    -info | -f
      shows number of posts and number of html tags files 
+   
+    -menu | -m
+     shows number of posts and number of html tags files 
+
 EOF
 }
 
@@ -617,5 +644,6 @@ case $1 in
              "-compress" | "-c")	CHECK_FILES ; CHECK_COMPRESS ; COMPRESS			;		;;
              "-browser" | "-b")	CHECK_FILES ; BROWSER				;				;;
              "-info" | "-f")	CHECK_FILES ; INFO				;				;;
+             "-menu" | "-m")	MENU						;				;;
                 *)   HELP							;  exit 1		;	;;
 esac
