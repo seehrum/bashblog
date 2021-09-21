@@ -2,8 +2,8 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 28158 bytes
-# Date: 2021-09-20
+# Size: 28302 bytes
+# Date: 2021-09-21
 
 # STATUS: Stable
 
@@ -156,7 +156,6 @@ cat <<EOF > "${INDEXHTML}"
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="description" content="${DESCRIPTION}">
-		<meta name="application-name" content="${WEBSITE_NAME}">
 		<meta property="og:image" content="${LINK_IMG_BLOG}" />
 		<meta property="og:description" content="${DESCRIPTION}">
 		<meta property="og:locale" content="${LANGUAGE}">
@@ -166,9 +165,9 @@ cat <<EOF > "${INDEXHTML}"
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
 		<meta name="twitter:title" content="${WEBSITE_NAME}"/>
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:site" value="${TWITTER}"/>
-        <meta name="twitter:description" content="${DESCRIPTION}" />
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="${TWITTER}"/>
+		<meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
@@ -270,6 +269,18 @@ fi
 local post_title_upper="${post_title^^}"
 local post_title_lower="${post_title,,}"
 
+read -ep "Post Description: " post_description
+
+# check if variable is null
+if [[ -z "${post_description}" ]] ; then
+echo "ERROR: No description specified"
+exit 1
+else
+sleep 0
+fi
+
+read -ep "Keywords: " post_keywords
+
 #image link og:image
 read -ep "link og:image: " link_img_post
 
@@ -278,28 +289,27 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
 <!DOCTYPE html>
 <html lang="${LANGUAGE}">
 	<head>
-		<meta charset="UTF-8">
+<meta charset="UTF-8">
 		<title>${post_title}</title>
 		<link rel="shortcut icon" href="${FAVICON}">
 		<meta name="author" content="${AUTHOR}">
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-		<meta name="description" content="${DESCRIPTION}">
-		<meta name="application-name" content="${WEBSITE_NAME}">
+		<meta name="description" content="${post_description}">
 		<meta property="og:image" content="${link_img_post}" />
-		<meta property="og:description" content="${DESCRIPTION}">
+		<meta property="og:description" content="${post_description}">
 		<meta property="og:locale" content="${LANGUAGE}">
-		<meta property="og:url" content="${WEBSITE_LINK}/${MENU_LINK_1}">
-		<meta property="og:title" content="${MENU_NAME_1}">
+		<meta property="og:url" content="${WEBSITE_LINK}/${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html">
+		<meta property="og:title" content="${post_title}">
 		<meta property="og:site_name" content="${WEBSITE_NAME}">
 		<meta property="og:type" content="website">
-		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
+		<meta name="keywords" content="${post_keywords}, ${WEBSITE_NAME}"/>
 		<meta name="twitter:title" content="${post_title}"/>
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:site" value="${TWITTER}"/>
-        <meta name="twitter:description" content="${DESCRIPTION}" />
-		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="${TWITTER}"/>
+		<meta name="twitter:description" content="${post_description}" />
+		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_1}">
 		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_2}">
@@ -338,7 +348,7 @@ ADD_TAG_BLOG
 ${EDITOR} ${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html
 
 # add post link in index.html
-sed -i '/<ul class="'"${category_name_lower// /-}"'">/a <li><article><h4><a href="'"${DIR_POSTS}"'/'"${category_name_upper// /-}"'/'"${html_name_lower// /-}"'.html\" title="'"${post_title_lower}"'">'"${post_title}"'</a></h4><time datetime="'"${date_hour}"'">'"${date_hour2}"'</time></article></li>' ${INDEXHTML}
+sed -i '/<ul class="'"${category_name_lower// /-}"'">/a <li><article><h4><a href="'"${DIR_POSTS}"'/'"${category_name_upper// /-}"'/'"${html_name_lower// /-}"'.html\" title="'"${post_title_lower}"'">'"${post_title}"'</a></h4><time datetime="'"${date_hour}"'">'"${date_hour2}"'</time><p>'"${post_description}"'</p></article></li>' ${INDEXHTML}
 fi
 }
 
@@ -418,7 +428,6 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="description" content="${description_tag}">
-		<meta name="application-name" content="${WEBSITE_NAME}">
 		<meta property="og:description" content="${description_tag}">
 		<meta property="og:locale" content="${LANGUAGE}">
 		<meta property="og:url" content="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
@@ -427,9 +436,9 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta property="og:type" content="website">
 		<meta name="keywords" content="${keywords_tag}, ${WEBSITE_NAME}"/>
 		<meta name="twitter:title" content="${TITLE_TAG}"/>
-        <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:site" value="${TWITTER}"/>
-        <meta name="twitter:description" content="${description_tag}" />
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="${TWITTER}"/>
+		<meta name="twitter:description" content="${description_tag}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="../${DIR_CSS}/${CSS_1}">
@@ -876,7 +885,6 @@ HELP()
 cat <<EOF
 bashblog v2.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -912,7 +920,6 @@ Arguments:
     
    -menu | -m
      Menu mode 
-
 EOF
 }
 
