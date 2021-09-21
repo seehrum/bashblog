@@ -2,7 +2,7 @@
 
 # bashblog v1.0 
 # Author: Raphael Ciribelly
-# Size: 19088 bytes
+# Size: 19091 bytes
 # Date: 2021-09-20
 
 # STATUS: Stable
@@ -113,7 +113,7 @@ cat <<EOF > "${INDEXHTML}"
 		<meta name="keywords" content="${MENU_NAME_1}, ${WEBSITE_NAME}"/>
 		<meta name="twitter:title" content="${WEBSITE_NAME}"/>
 		<meta name="twitter:card" content="summary_large_image"/>
-		<meta name="twitter:site" value="${TWITTER}"/>
+		<meta name="twitter:site" content="${TWITTER}"/>
 		<meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -284,7 +284,7 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta name="keywords" content="${keywords_tag}, ${WEBSITE_NAME}"/>
 		<meta name="twitter:title" content="${TITLE_TAG}"/>
 		<meta name="twitter:card" content="summary_large_image"/>
-		<meta name="twitter:site" value="${TWITTER}"/>
+		<meta name="twitter:site" content="${TWITTER}"/>
 		<meta name="twitter:description" content="${description_tag}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -602,7 +602,6 @@ HELP()
 cat <<EOF
 bashblog v1.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -632,7 +631,6 @@ Arguments:
    
     -menu | -m
      Menu mode 
-
 EOF
 }
 
