@@ -616,19 +616,19 @@ Arguments:
      Delete blog post
     
    -add-link | -al
-     Adds new link
+     Add new link
    
    -del-link | -dl
      Delete link
    
    -compress | -c
-     compress all html files 
+     Compress all html files 
    
    -browser | -b
-     Opens website in browser
+     Open website in browser
    
    -info | -f
-     Shows number of posts and number of html tags files 
+     Show number of posts and number of html tags files 
    
     -menu | -m
      Menu mode 
