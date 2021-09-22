@@ -2,8 +2,8 @@
 
 # bashblog v2.0 
 # Author: Raphael Ciribelly
-# Size: 28302 bytes
-# Date: 2021-09-21
+# Size: 28286 bytes
+# Date: 2021-09-22
 
 # STATUS: Stable
 
@@ -203,7 +203,7 @@ EOF
 echo "index file successfully created!"
 else
 
-# ADD_POST_BLOG
+# ADD_BLOG_POST
 
 # variables
 local date_hour="$(date +"%Y-%m-%d %R:%S" | xargs)"
@@ -547,7 +547,7 @@ fi
 
 }
 
-DEL_POST_BLOG(){
+DEL_BLOG_POST(){
 
 read -ep "Category name: " category_name
 
@@ -860,15 +860,15 @@ clear
 echo "BashBlog v2.0"
 echo "============="
 PS3='Please enter your choice: '
-options=("New" "Add category" "Delete category" "Add post blog" "Delete post blog" "Add link" "Delete link" "Compress" "Browser" "Information" "Quit")
+options=("New" "Add category" "Delete category" "Add blog post" "Delete blog post" "Add link" "Delete link" "Compress" "Browser" "Information" "Quit")
 select opt in "${options[@]}"
 do
     case "${opt}" in
          "New") NEW                                                                            ;;
          "Add category") CHECK_FILES ; CHECK_COMPRESS ; ADD_CATEGORY                           ;;
 	 "Delete category") CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_CATEGORY       ;;
-         "Add post blog")    CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML        ;;
-         "Delete post blog")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_POST_BLOG    ;;
+         "Add blog post")    CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML        ;;
+         "Delete blog post")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_BLOG_POST    ;;
          "Add link") CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK	                               ;;
     	 "Delete link") CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK                                ;;
 	 "Compress")    CHECK_FILES ; CHECK_COMPRESS ; COMPRESS                                ;;
@@ -885,6 +885,7 @@ HELP()
 cat <<EOF
 bashblog v2.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
+
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
@@ -892,31 +893,31 @@ Arguments:
      Create necessary files and folders
    
    -add-category | -ac
-     Adds new category
+     Add new category
    
    -del-category | -dc
      Delete category
    
-   -add-post-blog | -apb
-     Adds new post to category blog
+   -add-blog-post | -abp
+     Add new blog post
    
-   -del-post-blog | -dpb
-     Delete post blog
+   -del-blog-post | -dbp
+     Delete blog post
     
    -add-link | -al
-     Adds new link
+     Add new link
    
    -del-link | -dl
      Delete link
    
    -compress | -c
-     compress all html files 
+     Compress all html files 
    
    -browser | -b
-     Opens website in browser
+     Open website in browser
    
    -info | -f
-     Shows number of posts and number of html tags files 
+     Show number of posts and number of html tags files 
     
    -menu | -m
      Menu mode 
@@ -927,8 +928,8 @@ case $1 in
              "-new" | "-n")	 NEW										;	;;
              "-add-category" | "-ac") CHECK_FILES ; CHECK_COMPRESS ; ADD_CATEGORY				;	;;
              "-del-category" | "-dc")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_CATEGORY		;	;;
-             "-add-post-blog" | "-apb")  CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML		;	;;
-             "-del-post-blog" | "-dpb")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_POST_BLOG		;	;;
+             "-add-blog-post" | "-abp")  CHECK_FILES ; CHECK_COMPRESS  ; CHECK_CATEGORY ; BASE_HTML		;	;;
+             "-del-blog-post" | "-dbp")  CHECK_FILES ; CHECK_COMPRESS ; CHECK_CATEGORY ; DEL_BLOG_POST		;	;;
 			 "-add-link" | "-al")	CHECK_FILES ; CHECK_COMPRESS ; ADD_LINK				;	;;
              "-del-link" | "-dl")  CHECK_FILES ; CHECK_COMPRESS ; DEL_LINK					;	;;
              "-compress" | "-c") CHECK_FILES ; CHECK_COMPRESS ; COMPRESS					;	;;
