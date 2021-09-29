@@ -11,7 +11,7 @@
 # sed -i 's|><|>\n<|g' *.html
 # sed -i 's|}|}\n|g' *.css
 
-# OS: Debian GNU/Linux 10 (buster)
+# Tested on linux distributions: Debian 10 (Buster), Ubuntu 20.04
 # bash version: GNU bash, versão 5.0.3(1)-release (x86_64-pc-linux-gnu)
 # sed version: sed (GNU sed) 4.7
 # grep version: grep (GNU grep) 3.3
