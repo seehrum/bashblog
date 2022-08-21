@@ -152,6 +152,7 @@ cat <<EOF > "${INDEXHTML}"
 		<title>${MENU_NAME_1} | ${WEBSITE_NAME}</title>
 		<link rel="shortcut icon" href="${FAVICON}">
 		<meta name="author" content="${AUTHOR}">
+		<meta name="copyright" content="${WEBSITE_NAME}" />
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -293,6 +294,7 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
 		<title>${post_title}</title>
 		<link rel="shortcut icon" href="${FAVICON}">
 		<meta name="author" content="${AUTHOR}">
+		<meta name="copyright" content="${WEBSITE_NAME}" />
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -424,6 +426,7 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<title>${TITLE_TAG} | ${tag^^}</title>
 		<link rel="shortcut icon" href="${FAVICON}">
 		<meta name="author" content="${AUTHOR}">
+		<meta name="copyright" content="${WEBSITE_NAME}" />
 		<meta name="robots" content="index, follow" />
 		<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 		<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -885,7 +888,6 @@ HELP()
 cat <<EOF
 bashblog v2.0
 This script creates a base for a website in html5, configure the variables in in double quotes, do not change the paths, the html files are created through the BASE_HTML fuction.
-
 USAGE:
 ./bashblog [OPTIONS]
 Arguments:
