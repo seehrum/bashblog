@@ -170,7 +170,7 @@ cat <<EOF > "${INDEXHTML}"
 		<meta name="twitter:site" content="${TWITTER}"/>
 		<meta name="twitter:description" content="${DESCRIPTION}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${MENU_LINK_1}" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_1}">
 		<link rel="stylesheet" type="text/css" href="${DIR_CSS}/${CSS_2}">
 	</head>
@@ -312,7 +312,7 @@ cat <<EOF > "${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.ht
 		<meta name="twitter:site" content="${TWITTER}"/>
 		<meta name="twitter:description" content="${post_description}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_POSTS}/${category_name_upper// /-}/${html_name_lower// /-}.html" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_1}">
 		<link rel="stylesheet" type="text/css" href="../../${DIR_CSS}/${CSS_2}">
 	</head>
@@ -443,7 +443,7 @@ cat <<EOF > "${DIR_TAGS}/tag_${tag_lower// /-}.html"
 		<meta name="twitter:site" content="${TWITTER}"/>
 		<meta name="twitter:description" content="${description_tag}" />
 		<link rel="canonical" href="${WEBSITE_LINK}/${DIR_TAGS}/tag_${tag,,}.html" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="../${DIR_CSS}/${CSS_1}">
 		<link rel="stylesheet" type="text/css" href="../${DIR_CSS}/${CSS_2}">
 	</head>
